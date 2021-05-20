@@ -26,6 +26,7 @@ import {
   IonContent,
   IonButton,
 } from "@ionic/vue";
+import { SoundEffect } from "capacitor-sound-effect";
 
 export default {
   name: "Tab1",
@@ -37,9 +38,23 @@ export default {
     IonPage,
     IonButton,
   },
-  setup(props: object) {
+  setup() {
+    const loadSound = (soundFile: string) => {
+      SoundEffect.loadSound({
+        id: soundFile,
+        path: `../assets/sounds/${soundFile}.mp3`,
+      })
+        .then(() => true)
+        .catch(() => false);
+    };
+    loadSound("sound1");
+    loadSound("sound2");
+
     const play = (soundFile: string) => {
-      console.log({ soundFile, props });
+      console.log({ soundFile });
+      SoundEffect.play({ id: soundFile })
+        .then(() => true)
+        .catch(() => false);
     };
     return { play };
   },
